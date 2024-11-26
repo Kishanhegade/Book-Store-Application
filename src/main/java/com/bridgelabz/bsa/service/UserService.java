@@ -25,7 +25,8 @@ public class UserService {
         return userMapper.mapToUserResponse(user);
     }
 
-    public void login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
+        return null;
     }
 
     public UserResponse findUserById(long userId) {
