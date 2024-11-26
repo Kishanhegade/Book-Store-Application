@@ -18,8 +18,11 @@ public class UserService {
 
     private UserRepository userRepository;
     private UserMapper userMapper;
+
     public UserResponse registerUser(UserRequest userRequest) {
-        return null;
+        User user = userMapper.mapToUser(userRequest);
+        user = userRepository.save(user);
+        return userMapper.mapToUserResponse(user);
     }
 
     public void login(LoginRequest loginRequest) {
