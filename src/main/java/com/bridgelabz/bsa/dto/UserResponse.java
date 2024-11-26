@@ -1,0 +1,5 @@
+package com.bridgelabz.bsa.dto;
+
+public class UserResponse {
+
+}
