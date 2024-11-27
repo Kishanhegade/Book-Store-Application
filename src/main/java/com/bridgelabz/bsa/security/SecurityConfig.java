@@ -31,6 +31,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/register/**","/login/**")
                                 .permitAll()
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )

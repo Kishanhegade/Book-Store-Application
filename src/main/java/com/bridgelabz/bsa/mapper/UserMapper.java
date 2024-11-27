@@ -20,7 +20,6 @@ public class UserMapper {
         user.setFname(userRequest.getFname());
         user.setLname(userRequest.getLname());
         user.setDob(userRequest.getDob());
-        user.setPassword(encoder.encode(userRequest.getPassword()));
         user.setRole(userRequest.getRole());
         return user;
     }
