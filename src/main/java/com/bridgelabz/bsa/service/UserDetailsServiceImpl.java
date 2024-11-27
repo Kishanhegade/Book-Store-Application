@@ -2,12 +2,13 @@ package com.bridgelabz.bsa.service;
 
 import com.bridgelabz.bsa.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -16,11 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
                 .map(user -> {
-                    return User.builder() //org.springframework.security.core.userdetails.User;
-                            .username(user.getEmail())
-                            .password(user.getPassword())
-                            .roles(user.getRole())
-                            .build();
+                    return new UserDetailsImpl(user);
                 })
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 

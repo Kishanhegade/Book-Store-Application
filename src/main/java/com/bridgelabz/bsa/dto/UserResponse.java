@@ -1,5 +1,6 @@
 package com.bridgelabz.bsa.dto;
 
+import com.bridgelabz.bsa.model.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class UserResponse {
     private String lname;
     private String email;
     private LocalDate dob;
-    private String role;
+    private Role role;
     private LocalDate registeredDate;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDate updatedDate;

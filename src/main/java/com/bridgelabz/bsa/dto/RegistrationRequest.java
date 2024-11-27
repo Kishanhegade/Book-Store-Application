@@ -9,13 +9,16 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class UserRequest {
+public class RegistrationRequest {
 
     @NotBlank(message = "First Name is mandatory")
     private String fname;
 
     @NotBlank(message = "Last Name is mandatory")
     private String lname;
+
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@gmail\\.com$", message = "Email should be a valid Gmail address")
+    private String email;
 
     @NotBlank(message = "Password is mandatory")
     @Size(min = 8, message = "Password must be at least 8 characters long")
