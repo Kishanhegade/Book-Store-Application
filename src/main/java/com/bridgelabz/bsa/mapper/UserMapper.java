@@ -32,7 +32,7 @@ public class UserMapper {
         user.setEmail(registrationRequest.getEmail());
         user.setDob(registrationRequest.getDob());
         user.setRole(registrationRequest.getRole());
-        user.setPassword(registrationRequest.getPassword());
+        user.setPassword(encoder.encode(registrationRequest.getPassword()));
         user.setRegisteredDate(LocalDate.now());
         return user;
     }

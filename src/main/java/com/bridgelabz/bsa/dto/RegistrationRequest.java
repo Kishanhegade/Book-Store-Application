@@ -31,6 +31,7 @@ public class RegistrationRequest {
     private LocalDate dob;
 
     @NotBlank(message = "Role is mandatory")
+    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role must be either ADMIN or USER")
     private Role role;
 
 }
