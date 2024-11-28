@@ -1,7 +1,10 @@
 package com.bridgelabz.bsa.service;
 
 import com.bridgelabz.bsa.dto.CartResponse;
+import com.bridgelabz.bsa.exception.BookNotFoundByIdException;
 import com.bridgelabz.bsa.exception.CartNotFoundByIdException;
+import com.bridgelabz.bsa.exception.InvalidRequestException;
+import com.bridgelabz.bsa.exception.UserNotFoundByIdException;
 import com.bridgelabz.bsa.mapper.CartMapper;
 import com.bridgelabz.bsa.model.Book;
 import com.bridgelabz.bsa.model.Cart;
@@ -10,6 +13,7 @@ import com.bridgelabz.bsa.repository.BookRepository;
 import com.bridgelabz.bsa.repository.CartRepository;
 import com.bridgelabz.bsa.repository.UserRepository;
 import com.bridgelabz.bsa.security.JwtUtils;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,29 +29,35 @@ public class CartService {
     private UserRepository userRepository;
     private BookRepository bookRepository;
 
+    @Transactional
     public CartResponse addToCart(String token, Integer bookId, Long quantity) {
+        if (quantity <= 0) {
+            throw new InvalidRequestException("Quantity must be greater than zero");
+        }
+
         Long userId = jwtUtils.extractUserIdFromToken(token);
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-        Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
+                .orElseThrow(() -> new UserNotFoundByIdException("User not found with ID: " + userId));
 
-        Cart cart1 = cartRepository.findByUserAndBook(user, book)
-                .map(cart -> {
-                    cart.setTotalPrice(book.getPrice() * quantity);
-                    cart = cartRepository.save(cart);
-                    return cart;
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundByIdException("Book not found with ID: " + bookId));
+
+        Cart cart = cartRepository.findByUserAndBook(user, book)
+                .map(existingCart -> {
+                    existingCart.setQuantity(existingCart.getQuantity() + quantity);
+                    existingCart.setTotalPrice(existingCart.getQuantity() * book.getPrice());
+                    return existingCart;
                 }).orElseGet(() -> {
-                    Cart cart = new Cart();
-                    cart.setUser(user);
-                    cart.setBook(book);
-                    cart.setQuantity(quantity);
-                    cart.setTotalPrice(quantity * book.getPrice());
-                    cart = cartRepository.save(cart);
-                    return cart;
+                    Cart newCart = new Cart();
+                    newCart.setUser(user);
+                    newCart.setBook(book);
+                    newCart.setQuantity(quantity);
+                    newCart.setTotalPrice(quantity * book.getPrice());
+                    return newCart;
                 });
 
-        return cartMapper.mapToCartResponse(cart1);
+        cartRepository.save(cart);
+        return cartMapper.mapToCartResponse(cart);
 
     }
 
@@ -61,7 +71,7 @@ public class CartService {
 
     public List<CartResponse> removeFromCartByUserId(String token) {
         Long userId = jwtUtils.extractUserIdFromToken(token);
-        return cartRepository.findByUserId(userId)
+        return cartRepository.findAllByUserId(userId)
                 .stream()
                 .map(cart -> {
                     cartRepository.delete(cart);
@@ -70,6 +80,9 @@ public class CartService {
     }
 
     public CartResponse updateQuantity(long cartId, long quantity) {
+        if (quantity <= 0) {
+            throw new InvalidRequestException("Quantity must be greater than zero");
+        }
         return cartRepository.findById(cartId)
                 .map(cart -> {
                     cart.setQuantity(quantity);
@@ -80,7 +93,7 @@ public class CartService {
 
     public List<CartResponse> getAllCartItemsForUser(String token) {
         long userId = jwtUtils.extractUserIdFromToken(token);
-        return cartRepository.findByUserId(userId)
+        return cartRepository.findAllByUserId(userId)
                 .stream().map(
                         cart -> {
                             return cartMapper.mapToCartResponse(cart);

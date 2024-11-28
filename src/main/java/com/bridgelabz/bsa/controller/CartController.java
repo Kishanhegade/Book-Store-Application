@@ -18,32 +18,39 @@ public class CartController {
     @PostMapping("/carts/add")
     public ResponseEntity<CartResponse> addToCart
             (@RequestHeader("Authorization") String token,
-                                                  @RequestParam Integer bookId,
+             @RequestParam Integer bookId,
              @RequestParam Long quantity)
     {
         CartResponse cartResponse = cartService.addToCart(token, bookId, quantity);
         return ResponseEntity.status(HttpStatus.CREATED).body(cartResponse);
     }
 
-    @DeleteMapping("/carts/{cartId}")
+    @PatchMapping("/carts/{cartId}/update-quantity")
+    public ResponseEntity<CartResponse> updateQuantity(
+            @PathVariable long cartId,
+            @RequestParam long quantity) {
+        CartResponse cartResponse = cartService.updateQuantity(cartId, quantity);
+        return ResponseEntity.status(HttpStatus.OK).body(cartResponse);
+    }
+    @DeleteMapping("/carts/{cartId}/remove")
     public ResponseEntity<CartResponse> removeFromCartByCartId(@PathVariable long cartId) {
         CartResponse cartResponse = cartService.removeFromCartByCartId(cartId);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponse);
     }
 
-    @DeleteMapping("/carts")
+    @DeleteMapping("/carts/user/remove-all")
     public ResponseEntity<List<CartResponse>> removeFromCartByUserId(@RequestHeader("Authorization") String token) {
         List<CartResponse> cartResponses = cartService.removeFromCartByUserId(token);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 
-    @GetMapping("/carts")
+    @GetMapping("/carts/user")
     public ResponseEntity<List<CartResponse>> getAllCartItemsForUser(@RequestHeader("Authorization") String token) {
         List<CartResponse> cartResponses = cartService.getAllCartItemsForUser(token);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 
-    @GetMapping("")
+    @GetMapping("/carts")
     public ResponseEntity<List<CartResponse>> getAllCartItems() {
         List<CartResponse> cartResponses = cartService.getAllCartItems();
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
