@@ -49,11 +49,16 @@ public class CartService {
 
     }
 
-    public CartResponse removeFromCart(long cartId) {
+    public CartResponse removeFromCartByCartId(long cartId) {
         return cartRepository.findById(cartId)
                 .map(cart->{
                     cartRepository.delete(cart);
                     return cartMapper.mapToCartResponse(cart);
                 }).orElseThrow(()->new CartNotFoundByIdException("Unable to remove from cart"));
+    }
+
+    public CartResponse removeFromCartByUserId(String token) {
+        Long userId = jwtUtils.extractUserIdFromToken(token);
+        return cartRepository.findByUserId(userId);
     }
 }
