@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
@@ -17,9 +16,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookId;
     private String bookName;
-    private String author;
+    private String authorName;
     private String description;
-    private MultipartFile logo;
+    private byte[] logo;
     private double price;
     private Integer quantity;
 
