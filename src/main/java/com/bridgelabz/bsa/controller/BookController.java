@@ -3,6 +3,7 @@ package com.bridgelabz.bsa.controller;
 import com.bridgelabz.bsa.dto.BookRequest;
 import com.bridgelabz.bsa.dto.BookResponse;
 import com.bridgelabz.bsa.service.BookService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping("/books")
-    public ResponseEntity<BookResponse> addBook(@RequestBody BookRequest bookRequest) {
+    public ResponseEntity<BookResponse> addBook(@ModelAttribute @Valid BookRequest bookRequest) {
         BookResponse bookResponse = bookService.addBook(bookRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookResponse);
     }

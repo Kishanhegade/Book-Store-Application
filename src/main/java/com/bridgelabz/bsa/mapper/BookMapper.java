@@ -27,12 +27,11 @@ public class BookMapper {
     public BookResponse mapToBookResponse(Book book) {
         BookResponse bookResponse = new BookResponse();
         bookResponse.setBookId(book.getBookId());
-        bookResponse.setBookName(bookResponse.getBookName());
+        bookResponse.setBookName(book.getBookName());
         bookResponse.setAuthorName(book.getAuthorName());
-        bookResponse.setDescription(bookResponse.getDescription());
-        bookResponse.setLogo(bookResponse.getLogo());
-        bookResponse.setPrice(bookResponse.getPrice());
-        bookResponse.setQuantity(bookResponse.getQuantity());
+        bookResponse.setDescription(book.getDescription());
+        bookResponse.setPrice(book.getPrice());
+        bookResponse.setQuantity(book.getQuantity());
         return bookResponse;
     }
 }
