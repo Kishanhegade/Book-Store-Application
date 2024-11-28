@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class CartController {
@@ -24,8 +26,26 @@ public class CartController {
     }
 
     @DeleteMapping("/carts/{cartId}")
-    public ResponseEntity<CartResponse> removeFromCart(@PathVariable long cartId) {
-        CartResponse cartResponse = cartService.removeFromCart(cartId);
+    public ResponseEntity<CartResponse> removeFromCartByCartId(@PathVariable long cartId) {
+        CartResponse cartResponse = cartService.removeFromCartByCartId(cartId);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponse);
+    }
+
+    @DeleteMapping("/carts")
+    public ResponseEntity<List<CartResponse>> removeFromCartByUserId(@RequestHeader("Authorization") String token) {
+        List<CartResponse> cartResponses = cartService.removeFromCartByUserId(token);
+        return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
+    }
+
+    @GetMapping("/carts")
+    public ResponseEntity<List<CartResponse>> getAllCartItemsForUser(@RequestHeader("Authorization") String token) {
+        List<CartResponse> cartResponses = cartService.getAllCartItemsForUser(token);
+        return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<CartResponse>> getAllCartItems() {
+        List<CartResponse> cartResponses = cartService.getAllCartItems();
+        return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 }

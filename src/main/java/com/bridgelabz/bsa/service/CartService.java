@@ -13,6 +13,8 @@ import com.bridgelabz.bsa.security.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class CartService {
@@ -57,8 +59,39 @@ public class CartService {
                 }).orElseThrow(()->new CartNotFoundByIdException("Unable to remove from cart"));
     }
 
-    public CartResponse removeFromCartByUserId(String token) {
+    public List<CartResponse> removeFromCartByUserId(String token) {
         Long userId = jwtUtils.extractUserIdFromToken(token);
-        return cartRepository.findByUserId(userId);
+        return cartRepository.findByUserId(userId)
+                .stream()
+                .map(cart -> {
+                    cartRepository.delete(cart);
+                    return cartMapper.mapToCartResponse(cart);
+                }).toList();
+    }
+
+    public CartResponse updateQuantity(long cartId, long quantity) {
+        return cartRepository.findById(cartId)
+                .map(cart -> {
+                    cart.setQuantity(quantity);
+                    cart = cartRepository.save(cart);
+                    return cartMapper.mapToCartResponse(cart);
+                }).orElseThrow(()->new CartNotFoundByIdException("Unable to update quantity"));
+    }
+
+    public List<CartResponse> getAllCartItemsForUser(String token) {
+        long userId = jwtUtils.extractUserIdFromToken(token);
+        return cartRepository.findByUserId(userId)
+                .stream().map(
+                        cart -> {
+                            return cartMapper.mapToCartResponse(cart);
+                        }
+                ).toList();
+    }
+
+    public List<CartResponse> getAllCartItems() {
+        return cartRepository.findAll()
+                .stream().map(cart -> {
+                    return cartMapper.mapToCartResponse(cart);
+                }).toList();
     }
 }
