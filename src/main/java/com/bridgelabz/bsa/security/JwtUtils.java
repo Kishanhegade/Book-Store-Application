@@ -22,9 +22,11 @@ public class JwtUtils {
 
     public String generateTokenFromUsername(User user) {
         String username = user.getEmail();
+        Long userId = user.getUserId();
         return Jwts
                 .builder()
                 .subject(username)
+                .claim("userId", userId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 24*60*60*1000))
                 .signWith(getSigningKey())
@@ -64,5 +66,12 @@ public class JwtUtils {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, claim->claim.getExpiration());
+    }
+
+    public Long extractUserIdFromToken(String token) {
+        return extractClaim(token, claim -> {
+            return claim.get("userId",Long.class);
+        });
+
     }
 }

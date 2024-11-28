@@ -17,6 +17,6 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
-    private Long totalPrice;
+    private Double totalPrice;
     private Long quantity;
 }

@@ -11,7 +11,7 @@ public class CartResponse {
 
     private User user;
     private Book book;
-    private Long totalPrice;
+    private Double totalPrice;
     private Long quantity;
 
 }
