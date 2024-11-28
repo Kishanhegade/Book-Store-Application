@@ -3,9 +3,11 @@ package com.bridgelabz.bsa.mapper;
 import com.bridgelabz.bsa.dto.BookRequest;
 import com.bridgelabz.bsa.dto.BookResponse;
 import com.bridgelabz.bsa.model.Book;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class BookMapper {
 
     public Book mapToBook(BookRequest bookRequest, Book book) {
