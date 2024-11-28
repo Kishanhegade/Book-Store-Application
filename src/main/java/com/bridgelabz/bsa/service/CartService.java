@@ -61,6 +61,7 @@ public class CartService {
 
     }
 
+    @Transactional
     public CartResponse removeFromCartByCartId(long cartId) {
         return cartRepository.findById(cartId)
                 .map(cart->{
@@ -69,6 +70,7 @@ public class CartService {
                 }).orElseThrow(()->new CartNotFoundByIdException("Unable to remove from cart"));
     }
 
+    @Transactional
     public List<CartResponse> removeFromCartByUserId(String token) {
         Long userId = jwtUtils.extractUserIdFromToken(token);
         return cartRepository.findAllByUserId(userId)
