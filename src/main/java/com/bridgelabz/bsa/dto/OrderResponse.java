@@ -1,5 +1,6 @@
 package com.bridgelabz.bsa.dto;
 
+import com.bridgelabz.bsa.model.Address;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,5 @@ public class OrderResponse {
     private long quantity;
     private long userId;
     private long bookId;
-    private String address;
+    private Address address;
 }
