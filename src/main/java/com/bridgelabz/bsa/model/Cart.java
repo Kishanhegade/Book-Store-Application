@@ -19,4 +19,5 @@ public class Cart {
     private Book book;
     private Double totalPrice;
     private Long quantity;
+
 }

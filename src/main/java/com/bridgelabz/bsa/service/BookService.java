@@ -56,12 +56,16 @@ public class BookService {
                 }).orElseThrow(() -> new BookNotFoundByIdException("Unable to change price"));
     }
 
-    public BookResponse changeBookQuantity(int bookId, int quantity) {
+    public BookResponse changeBookQuantity(int bookId, long quantity) {
         return bookRepo.findById(bookId)
                 .map(book->{
                     book.setQuantity(quantity);
                     book = bookRepo.save(book);
                     return bookMapper.mapToBookResponse(book);
                 }).orElseThrow(() -> new BookNotFoundByIdException("Unable to change quantity"));
+    }
+
+    public void updateBook(Book book) {
+        bookRepo.save(book);
     }
 }

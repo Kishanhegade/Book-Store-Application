@@ -12,12 +12,12 @@ import com.bridgelabz.bsa.model.User;
 import com.bridgelabz.bsa.repository.BookRepository;
 import com.bridgelabz.bsa.repository.CartRepository;
 import com.bridgelabz.bsa.repository.UserRepository;
-import com.bridgelabz.bsa.security.JwtUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,17 +25,15 @@ public class CartService {
 
     private CartRepository cartRepository;
     private CartMapper cartMapper;
-    private JwtUtils jwtUtils;
     private UserRepository userRepository;
     private BookRepository bookRepository;
 
     @Transactional
-    public CartResponse addToCart(String token, Integer bookId, Long quantity) {
+    public CartResponse addToCart(long userId, Integer bookId, Long quantity) {
         if (quantity <= 0) {
             throw new InvalidRequestException("Quantity must be greater than zero");
         }
 
-        Long userId = jwtUtils.extractUserIdFromToken(token);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundByIdException("User not found with ID: " + userId));
 
@@ -71,8 +69,7 @@ public class CartService {
     }
 
     @Transactional
-    public List<CartResponse> removeFromCartByUserId(String token) {
-        Long userId = jwtUtils.extractUserIdFromToken(token);
+    public List<CartResponse> removeFromCartByUserId(long userId) {
         return cartRepository.findAllByUserId(userId)
                 .stream()
                 .map(cart -> {
@@ -93,8 +90,7 @@ public class CartService {
                 }).orElseThrow(()->new CartNotFoundByIdException("Unable to update quantity"));
     }
 
-    public List<CartResponse> getAllCartItemsForUser(String token) {
-        long userId = jwtUtils.extractUserIdFromToken(token);
+    public List<CartResponse> getAllCartItemsForUser(long userId) {
         return cartRepository.findAllByUserId(userId)
                 .stream().map(
                         cart -> cartMapper.mapToCartResponse(cart)
@@ -104,5 +100,13 @@ public class CartService {
     public List<CartResponse> getAllCartItems() {
         return cartRepository.findAll()
                 .stream().map(cart -> cartMapper.mapToCartResponse(cart)).toList();
+    }
+
+    public List<Cart> findAllByUserId(Long userId) {
+        return cartRepository.findAllByUserId(userId);
+    }
+
+    public Optional<Cart> findByCartId(long cartId) {
+        return cartRepository.findById(cartId);
     }
 }

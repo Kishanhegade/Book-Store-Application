@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,8 +23,8 @@ public class Order {
     private Address address;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Book book;
     private boolean cancel;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderBook> orderBooks = new ArrayList<>();
 }

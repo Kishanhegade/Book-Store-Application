@@ -1,6 +1,7 @@
 package com.bridgelabz.bsa.controller;
 
 import com.bridgelabz.bsa.dto.CartResponse;
+import com.bridgelabz.bsa.security.JwtUtils;
 import com.bridgelabz.bsa.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CartController {
 
     private CartService cartService;
+    private JwtUtils jwtUtils;
 
     @PostMapping("/carts/add")
     public ResponseEntity<CartResponse> addToCart
@@ -22,7 +24,8 @@ public class CartController {
              @RequestParam Long quantity)
     {
         String token = authHeader.substring(7);
-        CartResponse cartResponse = cartService.addToCart(token, bookId, quantity);
+        long userId = jwtUtils.extractUserIdFromToken(token);
+        CartResponse cartResponse = cartService.addToCart(userId, bookId, quantity);
         return ResponseEntity.status(HttpStatus.CREATED).body(cartResponse);
     }
 
@@ -43,14 +46,16 @@ public class CartController {
     @DeleteMapping("/carts/user/remove-all")
     public ResponseEntity<List<CartResponse>> removeFromCartByUserId(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
-        List<CartResponse> cartResponses = cartService.removeFromCartByUserId(token);
+        long userId = jwtUtils.extractUserIdFromToken(token);
+        List<CartResponse> cartResponses = cartService.removeFromCartByUserId(userId);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 
     @GetMapping("/carts/user")
     public ResponseEntity<List<CartResponse>> getAllCartItemsForUser(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
-        List<CartResponse> cartResponses = cartService.getAllCartItemsForUser(token);
+        long userId = jwtUtils.extractUserIdFromToken(token);
+        List<CartResponse> cartResponses = cartService.getAllCartItemsForUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 

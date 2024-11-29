@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +21,9 @@ public class Book {
     @Lob
     private byte[] logo;
     private double price;
-    private Integer quantity;
+    private Long quantity;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderBook> orderBooks = new ArrayList<>();
 
 }

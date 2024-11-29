@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderMapper {
 
-    public OrderResponse MapToOrderResponse(Order order) {
+    public OrderResponse mapToOrderResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setOrderId(order.getOrderId());
         orderResponse.setUserId(order.getUser().getUserId());
