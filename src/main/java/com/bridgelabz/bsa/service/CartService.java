@@ -97,16 +97,12 @@ public class CartService {
         long userId = jwtUtils.extractUserIdFromToken(token);
         return cartRepository.findAllByUserId(userId)
                 .stream().map(
-                        cart -> {
-                            return cartMapper.mapToCartResponse(cart);
-                        }
+                        cart -> cartMapper.mapToCartResponse(cart)
                 ).toList();
     }
 
     public List<CartResponse> getAllCartItems() {
         return cartRepository.findAll()
-                .stream().map(cart -> {
-                    return cartMapper.mapToCartResponse(cart);
-                }).toList();
+                .stream().map(cart -> cartMapper.mapToCartResponse(cart)).toList();
     }
 }
