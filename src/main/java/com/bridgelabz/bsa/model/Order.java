@@ -17,7 +17,8 @@ public class Order {
     private LocalDate orderDate;
     private Double price;
     private long quantity;
-    private String address;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Address address;
     @ManyToOne
     private User user;
     @ManyToOne

@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class CartMapper {
 
-    private BookMapper bookMapper;
-    private UserMapper userMapper;
 
     public CartResponse mapToCartResponse(Cart cart) {
         CartResponse cartResponse = new CartResponse();
-        cartResponse.setBook(bookMapper.mapToBookResponse(cart.getBook()));
-        cartResponse.setUser(userMapper.mapToUserResponse(cart.getUser()));
+        cartResponse.setBookId(cart.getBook().getBookId());
+        cartResponse.setUserId(cart.getUser().getUserId());
         cartResponse.setQuantity(cart.getQuantity());
         cartResponse.setTotalPrice(cart.getTotalPrice());
         return cartResponse;

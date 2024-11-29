@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class CartResponse {
 
-    private UserResponse user;
-    private BookResponse book;
+    private long userId;
+    private long bookId;
     private Double totalPrice;
     private Long quantity;
 
