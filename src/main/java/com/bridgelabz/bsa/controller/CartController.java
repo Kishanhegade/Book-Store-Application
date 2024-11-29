@@ -33,6 +33,7 @@ public class CartController {
         CartResponse cartResponse = cartService.updateQuantity(cartId, quantity);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponse);
     }
+
     @DeleteMapping("/carts/{cartId}/remove")
     public ResponseEntity<CartResponse> removeFromCartByCartId(@PathVariable long cartId) {
         CartResponse cartResponse = cartService.removeFromCartByCartId(cartId);
