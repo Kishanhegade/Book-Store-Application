@@ -70,9 +70,7 @@ public class JwtUtils {
     }
 
     public Long extractUserIdFromToken(String token) {
-        return extractClaim(token, claim -> {
-            return claim.get("userId",Long.class);
-        });
+        return extractClaim(token, claim -> claim.get("userId",Long.class));
 
     }
 }

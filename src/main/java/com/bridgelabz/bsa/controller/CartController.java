@@ -17,10 +17,11 @@ public class CartController {
 
     @PostMapping("/carts/add")
     public ResponseEntity<CartResponse> addToCart
-            (@RequestHeader("Authorization") String token,
+            (@RequestHeader("Authorization") String authHeader,
              @RequestParam Integer bookId,
              @RequestParam Long quantity)
     {
+        String token = authHeader.substring(7);
         CartResponse cartResponse = cartService.addToCart(token, bookId, quantity);
         return ResponseEntity.status(HttpStatus.CREATED).body(cartResponse);
     }
@@ -39,13 +40,15 @@ public class CartController {
     }
 
     @DeleteMapping("/carts/user/remove-all")
-    public ResponseEntity<List<CartResponse>> removeFromCartByUserId(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<CartResponse>> removeFromCartByUserId(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
         List<CartResponse> cartResponses = cartService.removeFromCartByUserId(token);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }
 
     @GetMapping("/carts/user")
-    public ResponseEntity<List<CartResponse>> getAllCartItemsForUser(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<CartResponse>> getAllCartItemsForUser(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
         List<CartResponse> cartResponses = cartService.getAllCartItemsForUser(token);
         return ResponseEntity.status(HttpStatus.OK).body(cartResponses);
     }

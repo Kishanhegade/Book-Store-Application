@@ -1,7 +1,5 @@
 package com.bridgelabz.bsa.dto;
 
-import com.bridgelabz.bsa.model.Book;
-import com.bridgelabz.bsa.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class CartResponse {
 
-    private User user;
-    private Book book;
+    private UserResponse user;
+    private BookResponse book;
     private Double totalPrice;
     private Long quantity;
 
