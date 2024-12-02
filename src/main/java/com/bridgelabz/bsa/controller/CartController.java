@@ -1,6 +1,6 @@
 package com.bridgelabz.bsa.controller;
 
-import com.bridgelabz.bsa.dto.CartResponse;
+import com.bridgelabz.bsa.responsedto.CartResponse;
 import com.bridgelabz.bsa.security.JwtUtils;
 import com.bridgelabz.bsa.service.CartService;
 import lombok.AllArgsConstructor;

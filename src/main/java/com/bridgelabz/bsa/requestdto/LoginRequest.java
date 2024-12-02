@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.requestdto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

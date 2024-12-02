@@ -1,7 +1,7 @@
 package com.bridgelabz.bsa.mapper;
 
-import com.bridgelabz.bsa.dto.BookRequest;
-import com.bridgelabz.bsa.dto.BookResponse;
+import com.bridgelabz.bsa.requestdto.BookRequest;
+import com.bridgelabz.bsa.responsedto.BookResponse;
 import com.bridgelabz.bsa.model.Book;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +14,13 @@ public class BookMapper {
         book.setBookName(bookRequest.getBookName());
         book.setAuthorName(bookRequest.getAuthorName());
         book.setDescription(bookRequest.getDescription());
+        book.setQuantity(bookRequest.getQuantity());
         try {
             book.setLogo(bookRequest.getLogo().getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         book.setPrice(bookRequest.getPrice());
-        book.setQuantity(bookRequest.getQuantity());
         return book;
     }
 

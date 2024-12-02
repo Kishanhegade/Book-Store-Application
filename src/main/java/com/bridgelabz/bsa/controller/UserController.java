@@ -1,6 +1,8 @@
 package com.bridgelabz.bsa.controller;
 
-import com.bridgelabz.bsa.dto.*;
+import com.bridgelabz.bsa.requestdto.*;
+import com.bridgelabz.bsa.responsedto.LoginResponse;
+import com.bridgelabz.bsa.responsedto.UserResponse;
 import com.bridgelabz.bsa.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.responsedto;
 
 import lombok.Getter;
 import lombok.Setter;

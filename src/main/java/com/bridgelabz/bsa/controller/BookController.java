@@ -1,7 +1,7 @@
 package com.bridgelabz.bsa.controller;
 
-import com.bridgelabz.bsa.dto.BookRequest;
-import com.bridgelabz.bsa.dto.BookResponse;
+import com.bridgelabz.bsa.requestdto.BookRequest;
+import com.bridgelabz.bsa.responsedto.BookResponse;
 import com.bridgelabz.bsa.service.BookService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class BookController {
     }
 
     @PatchMapping("/books/{bookId}/quantity")
-    public ResponseEntity<BookResponse> changeBookQuantity(@PathVariable int bookId, @RequestParam int quantity) {
+    public ResponseEntity<BookResponse> changeBookQuantity(@PathVariable int bookId, @RequestParam long quantity) {
         BookResponse bookResponse = bookService.changeBookQuantity(bookId,quantity);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(bookResponse);
     }

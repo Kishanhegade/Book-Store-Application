@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.requestdto;
 
 import com.bridgelabz.bsa.config.ValidFile;
 import jakarta.validation.constraints.DecimalMin;
@@ -27,5 +27,5 @@ public class BookRequest {
     private MultipartFile logo;
     @NotNull(message = "Quantity cannot be blank")
     @Min(value = 1, message = "Quantity must be at least 1")
-    private Integer quantity;
+    private Long quantity;
 }

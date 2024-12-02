@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.responsedto;
 
 import com.bridgelabz.bsa.model.Address;
 import lombok.Getter;
@@ -15,6 +15,5 @@ public class OrderResponse {
     private double price;
     private long quantity;
     private long userId;
-    private long bookId;
     private Address address;
 }

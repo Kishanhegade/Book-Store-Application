@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.responsedto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CartResponse {
 
+    private long cartId;
     private long userId;
     private long bookId;
     private Double totalPrice;

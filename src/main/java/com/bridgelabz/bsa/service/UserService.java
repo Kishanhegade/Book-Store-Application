@@ -1,10 +1,12 @@
 package com.bridgelabz.bsa.service;
 
-import com.bridgelabz.bsa.dto.*;
+import com.bridgelabz.bsa.requestdto.*;
 import com.bridgelabz.bsa.exception.UserNotFoundByIdException;
 import com.bridgelabz.bsa.mapper.UserMapper;
 import com.bridgelabz.bsa.model.User;
 import com.bridgelabz.bsa.repository.UserRepository;
+import com.bridgelabz.bsa.responsedto.LoginResponse;
+import com.bridgelabz.bsa.responsedto.UserResponse;
 import com.bridgelabz.bsa.security.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

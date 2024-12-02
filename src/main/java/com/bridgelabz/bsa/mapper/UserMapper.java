@@ -1,8 +1,8 @@
 package com.bridgelabz.bsa.mapper;
 
-import com.bridgelabz.bsa.dto.RegistrationRequest;
-import com.bridgelabz.bsa.dto.UserRequest;
-import com.bridgelabz.bsa.dto.UserResponse;
+import com.bridgelabz.bsa.requestdto.RegistrationRequest;
+import com.bridgelabz.bsa.requestdto.UserRequest;
+import com.bridgelabz.bsa.responsedto.UserResponse;
 import com.bridgelabz.bsa.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -1,17 +1,13 @@
 package com.bridgelabz.bsa.service;
 
-import com.bridgelabz.bsa.dto.OrderRequest;
-import com.bridgelabz.bsa.dto.OrderResponse;
+import com.bridgelabz.bsa.requestdto.OrderRequest;
+import com.bridgelabz.bsa.responsedto.OrderResponse;
 import com.bridgelabz.bsa.exception.CartNotFoundByIdException;
 import com.bridgelabz.bsa.exception.InvalidQuantityException;
 import com.bridgelabz.bsa.exception.OrderNotFoundByIdException;
 import com.bridgelabz.bsa.exception.UserNotFoundByIdException;
 import com.bridgelabz.bsa.mapper.OrderMapper;
-import com.bridgelabz.bsa.model.Book;
-import com.bridgelabz.bsa.model.Cart;
-import com.bridgelabz.bsa.model.Order;
-import com.bridgelabz.bsa.model.OrderBook;
-import com.bridgelabz.bsa.model.User;
+import com.bridgelabz.bsa.model.*;
 import com.bridgelabz.bsa.repository.OrderRepository;
 import com.bridgelabz.bsa.repository.UserRepository;
 import com.bridgelabz.bsa.security.JwtUtils;
@@ -65,6 +61,8 @@ public class OrderService {
             book.setQuantity(book.getQuantity() - cart.getQuantity());
             bookService.updateBook(book);
 
+            order.setQuantity(cart.getQuantity());
+
             OrderBook orderBook = new OrderBook();
             orderBook.setOrder(order);
             orderBook.setBook(book);
@@ -75,12 +73,12 @@ public class OrderService {
         order.setOrderBooks(orderBooks);
 
         // Save the order
-        orderRepo.save(order);
+        Order savedOrder = orderRepo.save(order);
 
         // Clear the user's cart
         cartService.removeFromCartByUserId(user.getUserId());
 
-        return orderMapper.mapToOrderResponse(order);
+        return orderMapper.mapToOrderResponse(savedOrder);
     }
 
 
@@ -94,6 +92,7 @@ public class OrderService {
         // Validate stock
         Book book = cart.getBook();
         if (cart.getQuantity() > book.getQuantity()) {
+            cartService.removeFromCartByCartId(cartId);
             throw new InvalidQuantityException("Not enough stock for book: " + book.getBookName());
         }
 
@@ -104,7 +103,7 @@ public class OrderService {
         order.setPrice(cart.getTotalPrice());
         order.setAddress(orderRequest.getAddress());
         order.setCancel(false);
-
+        order.setQuantity(cart.getQuantity());
         // Add the book to the order using OrderBook
         OrderBook orderBook = new OrderBook();
         orderBook.setOrder(order);
@@ -117,11 +116,10 @@ public class OrderService {
         bookService.updateBook(book);
 
         // Save the order
-        orderRepo.save(order);
+        order = orderRepo.save(order);
 
         // Remove the cart item
         cartService.removeFromCartByCartId(cartId);
-
         return orderMapper.mapToOrderResponse(order);
     }
 

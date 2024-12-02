@@ -1,7 +1,7 @@
 package com.bridgelabz.bsa.service;
 
-import com.bridgelabz.bsa.dto.BookRequest;
-import com.bridgelabz.bsa.dto.BookResponse;
+import com.bridgelabz.bsa.requestdto.BookRequest;
+import com.bridgelabz.bsa.responsedto.BookResponse;
 import com.bridgelabz.bsa.exception.BookNotFoundByIdException;
 import com.bridgelabz.bsa.mapper.BookMapper;
 import com.bridgelabz.bsa.model.Book;

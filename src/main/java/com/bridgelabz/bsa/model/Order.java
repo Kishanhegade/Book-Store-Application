@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -19,7 +20,8 @@ public class Order {
     private LocalDate orderDate;
     private Double price;
     private long quantity;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
     private Address address;
     @ManyToOne
     private User user;

@@ -1,6 +1,6 @@
 package com.bridgelabz.bsa.service;
 
-import com.bridgelabz.bsa.dto.CartResponse;
+import com.bridgelabz.bsa.responsedto.CartResponse;
 import com.bridgelabz.bsa.exception.BookNotFoundByIdException;
 import com.bridgelabz.bsa.exception.CartNotFoundByIdException;
 import com.bridgelabz.bsa.exception.InvalidRequestException;

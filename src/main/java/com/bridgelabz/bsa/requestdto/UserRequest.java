@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.requestdto;
 
 import com.bridgelabz.bsa.model.Role;
 import jakarta.validation.constraints.*;

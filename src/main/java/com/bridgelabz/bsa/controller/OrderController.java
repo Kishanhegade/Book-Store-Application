@@ -1,7 +1,7 @@
 package com.bridgelabz.bsa.controller;
 
-import com.bridgelabz.bsa.dto.OrderRequest;
-import com.bridgelabz.bsa.dto.OrderResponse;
+import com.bridgelabz.bsa.requestdto.OrderRequest;
+import com.bridgelabz.bsa.responsedto.OrderResponse;
 import com.bridgelabz.bsa.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,14 +18,14 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/orders/place")
-    public ResponseEntity<OrderResponse> placeOrderByUser(@RequestHeader("Authorization") String authHeader,@Valid OrderRequest orderRequest) {
+    public ResponseEntity<OrderResponse> placeOrderByUser(@RequestHeader("Authorization") String authHeader,@RequestBody @Valid OrderRequest orderRequest) {
         String token = authHeader.substring(7);
         OrderResponse orderResponse = orderService.placeOrderByUser(token, orderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);
     }
 
     @PostMapping("/orders/place/{cartId}")
-    public ResponseEntity<OrderResponse> placeOrderByCartId(@RequestHeader("Authorization") String authHeader,@PathVariable long cartId,@Valid OrderRequest orderRequest) {
+    public ResponseEntity<OrderResponse> placeOrderByCartId(@RequestHeader("Authorization") String authHeader,@PathVariable long cartId,@Valid @RequestBody OrderRequest orderRequest) {
         String token = authHeader.substring(7);
         OrderResponse orderResponse = orderService.placeOrderByCartId(token, cartId, orderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderResponse);

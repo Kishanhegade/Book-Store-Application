@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.dto;
+package com.bridgelabz.bsa.responsedto;
 
 import com.bridgelabz.bsa.model.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
