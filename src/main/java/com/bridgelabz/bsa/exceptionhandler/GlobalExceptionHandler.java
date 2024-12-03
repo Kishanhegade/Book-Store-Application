@@ -1,9 +1,6 @@
 package com.bridgelabz.bsa.exceptionhandler;
 
-import com.bridgelabz.bsa.exception.BookNotFoundByIdException;
-import com.bridgelabz.bsa.exception.CartNotFoundByIdException;
-import com.bridgelabz.bsa.exception.InvalidRequestException;
-import com.bridgelabz.bsa.exception.UserNotFoundByIdException;
+import com.bridgelabz.bsa.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +26,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<String> handleInvalidRequestException(InvalidRequestException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidQuantityException.class)
+    public ResponseEntity<String> handleInvalidQuantity(InvalidQuantityException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(OrderNotFoundByIdException.class)
+    public ResponseEntity<String> handleOrderNotFoundById(OrderNotFoundByIdException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
