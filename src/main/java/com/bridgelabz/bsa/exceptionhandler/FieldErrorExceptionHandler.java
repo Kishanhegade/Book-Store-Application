@@ -1,4 +1,4 @@
-package com.bridgelabz.bsa.exception;
+package com.bridgelabz.bsa.exceptionhandler;
 
 import com.bridgelabz.bsa.utility.CustomFieldError;
 import org.springframework.http.HttpHeaders;

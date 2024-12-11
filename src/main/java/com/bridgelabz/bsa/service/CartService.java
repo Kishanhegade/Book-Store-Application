@@ -85,6 +85,7 @@ public class CartService {
         return cartRepository.findById(cartId)
                 .map(cart -> {
                     cart.setQuantity(quantity);
+                    cart.setTotalPrice(cart.getTotalPrice()*quantity);
                     cart = cartRepository.save(cart);
                     return cartMapper.mapToCartResponse(cart);
                 }).orElseThrow(()->new CartNotFoundByIdException("Unable to update quantity"));

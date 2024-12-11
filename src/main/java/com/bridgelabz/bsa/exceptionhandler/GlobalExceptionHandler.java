@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidRequestException.class)
-    public ResponseEntity<String> handleInvalidRequestException(InvalidRequestException ex) {
+    public ResponseEntity<String> handleInvalidRequest(InvalidRequestException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
@@ -36,6 +36,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderNotFoundByIdException.class)
     public ResponseEntity<String> handleOrderNotFoundById(OrderNotFoundByIdException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(WishlistNotFoundByIdException.class)
+    public ResponseEntity<String> handleWishlistNotFoundById(WishlistNotFoundByIdException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

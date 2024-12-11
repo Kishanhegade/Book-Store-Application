@@ -4,24 +4,27 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+import java.time.LocalDate;
+
 @Entity
-public class Cart {
+@Getter
+@Setter
+public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
+    private Long feedbackId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    private Double totalPrice;
-    private Long quantity;
-
+    private int rating;
+    private String comment;
+    private LocalDate submittedDate;
 }
+
