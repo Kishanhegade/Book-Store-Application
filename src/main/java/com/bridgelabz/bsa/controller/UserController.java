@@ -53,6 +53,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userResponse);
     }
 
+    @GetMapping("/users/check")
+    public ResponseEntity<String> check() {
+        return ResponseEntity.status(HttpStatus.OK).body("CI CD pipeline working fine!!!");
+    }
 }
 
 
