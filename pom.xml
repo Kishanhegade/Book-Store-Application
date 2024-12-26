@@ -102,6 +102,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>bookstore-backend</finalName>
 	</build>
 
 </project>
