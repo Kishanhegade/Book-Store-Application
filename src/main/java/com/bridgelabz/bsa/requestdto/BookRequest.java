@@ -22,9 +22,11 @@ public class BookRequest {
     @NotNull(message = "Price is mandatory")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private Double price;
+
     @NotNull(message = "Logo is mandatory")
     @ValidFile(message = "Only .jpg, .png, or .pdf files are allowed for the logo")
     private MultipartFile logo;
+
     @NotNull(message = "Quantity cannot be blank")
     @Min(value = 1, message = "Quantity must be at least 1")
     private Long quantity;

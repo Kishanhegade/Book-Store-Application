@@ -30,6 +30,4 @@ public class FeedbackController {
         return ResponseEntity.status(HttpStatus.OK).body(feedback);
     }
 
-
-
 }

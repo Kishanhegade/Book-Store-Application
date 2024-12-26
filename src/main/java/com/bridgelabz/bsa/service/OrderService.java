@@ -56,7 +56,7 @@ public class OrderService {
             book.setQuantity(book.getQuantity() - cart.getQuantity());
             bookService.updateBook(book);
 
-            order.setQuantity(cart.getQuantity());
+            order.setQuantity(order.getQuantity()+cart.getQuantity());
 
             OrderBook orderBook = new OrderBook();
             orderBook.setOrder(order);
